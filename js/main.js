@@ -10,33 +10,32 @@ document.getElementById('add-btn').addEventListener('click', () => {
 	const tbody = document.querySelector('tbody');
 	const addTr = tbody.appendChild(tr);
 
-	todoList.push({
-		id: todoList.length,
+	let todoListId = todoList.length;
+
+	const todo = {
+		id: todoListId,
 		comment: document.getElementById('input-task').value,
 		status: '作業中',
 		deleteBtn: '削除',
-	});
+	};
 
-	console.log(todoList);
-
-	const index = todoList.length - 1;
+	todoList.push(todo);
 
 	const tdId = document.createElement('td');
 	const tdComment = document.createElement('td');
 	const tdStatus = document.createElement('td');
 	const tdDeleteBtn = document.createElement('td');
 
-	tdId.textContent = todoList[index].id;
+	tdId.textContent = todo.id;
+	tdComment.textContent = todo.comment;
 
-	tdComment.textContent = todoList[index].comment;
-
-	statusButton.textContent = todoList[index].status;
+	statusButton.textContent = todo.status;
 	tdStatus.appendChild(statusButton);
 
-	deleteButton.textContent = todoList[index].deleteBtn;
+	deleteButton.textContent = todo.deleteBtn;
 	deleteButton.className = 'delete-button';
 	tdDeleteBtn.appendChild(deleteButton);
-	
+
 	addTr.appendChild(tdId);
 	addTr.appendChild(tdComment);
 	addTr.appendChild(tdStatus);
@@ -45,10 +44,8 @@ document.getElementById('add-btn').addEventListener('click', () => {
 	document.getElementById('input-task').value = "";
 
 	tdDeleteBtn.addEventListener('click', () => {
-
-		todoList.splice(Number(tdId.textContent), 1);
-
-		console.log(todoList);
+		
+		todoList.splice(Number(todoListId.textContent), 1);
 		tbody.removeChild(tr);
 
 		for (let i = 0; i < todoList.length; i++) {
@@ -57,6 +54,5 @@ document.getElementById('add-btn').addEventListener('click', () => {
 			tbody.children[i].firstChild.textContent = i;
 		}
 	});
-
 });
 
